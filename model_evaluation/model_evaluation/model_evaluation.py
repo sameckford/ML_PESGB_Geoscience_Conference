@@ -58,7 +58,7 @@ class ModelEvaluation:
             y_low, y_high = y_lims
             plt.ylim(bottom=y_low, top=y_high)
         plt.xlabel("Actual depth (ft)")
-        plt.xlabel("predicted depth (ft)")
+        plt.ylabel("predicted depth (ft)")
         plt.show()
     
     def plot_error_dist(self, bins, models=None, x_lims=None, y_lims=None):
@@ -83,15 +83,14 @@ class ModelEvaluation:
                     label=f"{model} predicted depth")
             
         plt.legend()
-        plt.title("Actual vs Predicted depth (ft)")
+        plt.title("Model error distrobution (ft)")
         if x_lims is not None:
             x_low, x_high = x_lims
             plt.xlim(left=x_low, right=x_high)
         if y_lims is not None:
             y_low, y_high = y_lims
             plt.ylim(bottom=y_low, top=y_high)
-        plt.xlabel("Actual depth (ft)")
-        plt.xlabel("predicted depth (ft)")
+        plt.xlabel("Model error (ft)")
         plt.show()
         
     def _calc_metric(self, df, metric, pred, actual):
@@ -127,6 +126,7 @@ class ModelEvaluation:
             plt.plot(self.df_group_list[f"{model}_GROUPED_DEPTH"].index,
                      self.df_group_list[f"{model}_GROUPED_DEPTH"][metric],
                      color=col,
+                     marker='o',
                     label= f"{model} {metric} by depth")
         plt.legend()
         plt.title(f"Model {metric} grouped by depth (bins=({min_value}, {max_value}), step={step})")
@@ -134,11 +134,7 @@ class ModelEvaluation:
         plt.ylabel(f"{metric}")
         plt.show()
         plt.show()
-            
-            
-            
-            
-            
+                        
     def plot_metric_vs_surface(self, metric="MAE", models=None):
         if models is None:
             models = self.models
@@ -156,6 +152,7 @@ class ModelEvaluation:
             plt.plot(self.df_group_list[f"{model}_GROUPED_SURFACE"].index,
                      self.df_group_list[f"{model}_GROUPED_SURFACE"][metric],
                      color=col,
+                     marker='o',
                      label=f"{model} {metric} by surface")
         plt.legend()
         plt.title(f"Model {metric} by grouped by surface")
